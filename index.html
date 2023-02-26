@@ -9,7 +9,7 @@
 <body>
     <input type="text" id="in"></input>
     <button id="test" onclick="prediction(document.getElementById('in').value)">Test model</button>
-    <div id="outputs"></div>
+    <div id="out"></div>
 </body>
     <script>
         const model = tf.sequential();
@@ -18,15 +18,15 @@
             loss: 'meanSquaredError',
             optimizer: 'sgd'
         });
-        learnLin = async () => {
-            const xs = tf.tensor2d([-1, 0, 1, 2, 3, 4], [6,1]);
-            const ys = tf.tensor2d([-3, -1, 1, 3, 5, 6], [6,1]);
+        train = async () => {
+            const xs = tf.tensor2d([-1,2,0,4,1,3,5],[7,1]);
+            const ys = tf.tensor2d([1,5,2,7,4,6,8], [7,1]);
             await model.fit(xs, ys, {epochs: 250});
             alert("done training!!!!");
         }
-        learnLin();
+        train();
         prediction = (input) =>{
-            document.getElementById('outputs').innerText = model.predict(tf.tensor2d([parseInt(input)], [1,1]));
+            document.getElementById('out').innerText = model.predict(tf.tensor2d([parseInt(input)], [1,1]));
         }
     </script>
 </html>
